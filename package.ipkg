@@ -1,0 +1,9 @@
+package NewEden
+
+modules = NewEden
+        , NewEden.Algebra
+        , NewEden.Natural
+
+sourcedir = src
+
+opts = "--noprelude"
