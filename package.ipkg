@@ -1,8 +1,11 @@
 package NewEden
 
-modules = NewEden
-        , NewEden.Algebra
+modules = NewEden.Algebra
+        , NewEden.NaturalAxioms
         , NewEden.Natural
+        , NewEden.NaturalTheorems
+        , NewEden.NaturalPropertiesHelpers
+        , NewEden.GMP
 
 sourcedir = src
 

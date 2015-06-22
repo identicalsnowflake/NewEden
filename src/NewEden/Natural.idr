@@ -41,21 +41,18 @@ properties (MkNatural p _) = p
    compiler's head in *logarithmic* space (rather than linear space, like the Peano Nat).
 -}
 
-mutual
-
-  -- two functions should not be necessary. serious buggage going on with the compiler here
-
-  fromIntegerHelper : Integer -> Natural p
-  fromIntegerHelper x = case x of
-    0 => (MkNatural p (one p) + (MkNatural p (one p))) * (assert_total $ fromInteger (prim__sdivBigInt x 2))
-    _ => (MkNatural p (one p)) + (assert_total $ fromInteger (prim__subBigInt x 1))
-  
-  fromInteger : Integer -> Natural p
-  fromInteger x =
-    case x of
-    0 => MkNatural p (zero p)
-    1 => MkNatural p (one p)
-    m => fromIntegerHelper $ assert_total (prim__sremBigInt m 2)
+fromInteger : Integer -> Natural p
+fromInteger rem =
+  let z = MkNatural p (zero p) in
+  let o = MkNatural p (one p) in
+  case rem of
+    0 => z
+    1 => o
+    _ =>
+         case (assert_total $ prim__sremBigInt rem 2) of
+           0 => (o + o) * (assert_total $ fromInteger (prim__sdivBigInt rem 2))
+           1 => o + (assert_total $ fromInteger (prim__subBigInt rem 1))
+           _ => o -- impossible
 
 -- force resolution of 0 to Natural p, since occasionally 0 is
 -- ambiguous (e.g., right below in zeroIsNotOne)
