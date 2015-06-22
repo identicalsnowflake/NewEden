@@ -133,9 +133,8 @@ lessThanIsTransitive {p} (MkLessThan x y (c1 ** (eq1,c1NonZero))) (MkLessThan y 
       let yltz = MkLessThan y z (c2 ** (eq2,c2NonZero)) in
       absurd $ lessThanNotSymmetric zlty yltz
 
-lessThanAdditionWeakened : (x : Natural p) -> (y : Natural p) -> (z : Natural p)
-                         -> LessThan x y -> LessThan x (y + z)
-lessThanAdditionWeakened {p} x y z (MkLessThan x y (c ** (xpyic,cNotZero))) =
+lessThanAdditionWeakened : LessThan x y -> (z : Natural p) -> LessThan x (y + z)
+lessThanAdditionWeakened {p} {x} {y} (MkLessThan x y (c ** (xpyic,cNotZero))) z =
   let (MkStrictMonoid _ noinv) = plusLacksInverses p in
   let cPlusZIsZeroImpliesCIsZero = noinv c z in
   let cPlusZNotZero = (\sumZero => cNotZero $ cPlusZIsZeroImpliesCIsZero sumZero) in
