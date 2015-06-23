@@ -5,7 +5,8 @@ modules = NewEden.Algebra
         , NewEden.Natural
         , NewEden.NaturalTheorems
         , NewEden.NaturalPropertiesHelpers
-        , NewEden.GMP
+        , NewEden.Implementations.GMP
+        , NewEden.Implementations.Int64
 
 sourcedir = src
 

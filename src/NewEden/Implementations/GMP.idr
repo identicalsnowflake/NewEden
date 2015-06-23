@@ -1,4 +1,4 @@
-module NewEden.GMP
+module NewEden.Implementations.GMP
 
 import Prelude
 

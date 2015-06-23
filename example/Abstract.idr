@@ -2,6 +2,7 @@ import NewEden.Natural
 import Prelude
 
 -- we can also formally prove things about abstract numbers (even large ones)
+-- compare it with the standard Nat in the following:
 
 x : Natural p
 x = 1487129834719898712935812394810

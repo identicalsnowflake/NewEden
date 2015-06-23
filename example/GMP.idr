@@ -1,6 +1,6 @@
 import NewEden.Natural
 import NewEden.NaturalTheorems
-import NewEden.GMP
+import NewEden.Implementations.GMP
 
 import Prelude
 
