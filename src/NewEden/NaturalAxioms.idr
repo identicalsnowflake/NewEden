@@ -5,8 +5,14 @@ import Prelude.Either
 import NewEden.Algebra
 
 {- NaturalProperties -
-   A full-fledged, non-recursive, axiomatic description of the natural numbers defined in 
-   terms of functions on a given type t.
+   
+   An incomplete (http://www.dicosmo.org/Articles/zeroisnfa.pdf), non-recursive,
+   axiomatic description of the natural numbers defined in terms of functions on a
+   given type t.
+   
+   Despite the fact that this is *not* a full description of the behavior of the 
+   Peano naturals, it is probably good enough to do anything of practical interest
+   to most people (even mathematicians, in most cases).
 -}
 
 data NaturalProperties : (t:Type) -> Type where
