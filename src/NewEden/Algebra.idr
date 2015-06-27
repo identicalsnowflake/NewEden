@@ -41,6 +41,113 @@ data Group : Monoid t f z -> Type where
    -> (prfInverse:((a:t) -> (b : t ** (f a b = z))))
    -> Group m
 
+data Coproduct : (C : Type) -> Type where
+  MkCoproduct :
+      {C : Type}
+   -> (coproduct : C -> C -> C)
+   -> ((x1 : C) -> (x2 : C) ->
+        (
+           i1 : C -> C **
+           (
+             i2 : C -> C **
+             (
+               i1 x1 = coproduct x1 x2
+             , i2 x2 = coproduct x1 x2
+             , (x : C) ->
+               (
+                 f1 : C -> C **
+                 (
+                   f2 : C -> C **
+                   (
+                     f1 x1 = x
+                   , f2 x2 = x
+                   , (f : C -> C **
+                     (
+                       f $ coproduct x1 x2 = x
+                     , ((c : C) -> f1 c = f (i1 c))
+                     , ((c : C) -> f2 c = f (i2 c))
+                     , ((f' : C -> C)
+                         -> f' $ coproduct x1 x2 = x
+                         -> ((c : C) -> f1 c = f' (i1 c))
+                         -> ((c : C) -> f2 c = f' (i2 c))
+                         -> ((n : C) -> f' c = f c)
+                       )
+                     ))
+                   )
+                 )
+               )
+             )
+           )
+        )
+      )
+   -> Coproduct C
+
+data Product : (C : Type) -> Type where
+  MkProduct :
+      {C : Type}
+   -> (product : C -> C -> C)
+   -> ((x1 : C) -> (x2 : C) ->
+       (
+         p1 : C -> C **
+         (
+           p2 : C -> C **
+           ((y : C) ->
+            (f1 : C -> C) ->
+            f1 y = x1 ->
+            (f2 : C -> C) ->
+            f2 y = x2 ->
+            (
+              f : C -> C **
+              (
+                f y = product x1 x2
+              , ((c : C) -> p1 (f c) = f1 c)
+              , ((c : C) -> p2 (f c) = f2 c)
+              , ((f' : C -> C) ->
+                 f' y = product x1 x2 ->
+                 ((c : C) -> p1 (f' c) = f1 c) ->
+                 ((c : C) -> p2 (f' c) = f2 c) ->
+                 ((c : C) -> f' c = f c)
+                )
+              )
+            )
+           )
+         )
+       )
+      )
+   -> Product C
+
+data InitialObject : (C : Type) -> Type where
+  MkInitialObject :
+      {C : Type}
+   -> (initialObject : C)
+   -> ((x : C) ->
+       (f : C -> C **
+        ( (f initialObject = x)
+        , ((f' : C -> C) ->
+           f' initialObject = x ->
+           ((c : C) -> f' c = f c)
+          )
+        )
+       )
+      )
+   -> InitialObject C
+
+data TerminalObject : (C : Type) -> Type where
+  MkTerminalObject :
+      {C : Type}
+   -> (terminalObject : C)
+   -> ((x : C) ->
+       (f : C -> C **
+        ((f x = terminalObject)
+        , ((f' : C -> C) ->
+           f' x = terminalObject ->
+           ((c : C) -> f' c = f c)
+          )
+        )
+       )
+      )
+   -> TerminalObject C
+
 data Isomorphism : (t:Type) -> (u:Type) -> (f:(t -> u)) -> (g:(u -> t)) -> Type where
   MkIsomorphism : (t:Type) -> (u:Type) -> (f:(t -> u)) -> (g:(u -> t)) -> ((a:t) -> g (f a) = a) -> ((a:u) -> f (g a) = a) -> Isomorphism t u f g
 
